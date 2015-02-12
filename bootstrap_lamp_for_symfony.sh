@@ -12,11 +12,20 @@ deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse
 deb http://security.ubuntu.com/ubuntu trusty-security multiverse
 EOF
 
+echo "Installing Git PPA"
+add-apt-repository -y ppa:git-core/ppa > /dev/null
+
+echo "Adding NodeJS PPA"
+add-apt-repository -y ppa:chris-lea/node.js > /dev/null
+
 echo "Updating packages"
-apt-get update > /dev/null
+apt-get -y update > /dev/null
+
+echo "Installing bindfs"
+apt-get install -y bindfs > /dev/null
 
 echo "Installing git and vim"
-apt-get install bindfs git vim -y > /dev/null
+apt-get install -y git vim > /dev/null
 
 echo "Installing Apache Packages"
 apt-get install -y apache2 libapache2-mod-fastcgi apache2-mpm-worker
@@ -117,10 +126,6 @@ service apache2 restart > /dev/null
 # ---------------------------------------
 #       Tools Setup
 # ---------------------------------------
-
-echo "Adding NodeJS PPA Repository"
-add-apt-repository -y ppa:chris-lea/node.js > /dev/null
-apt-get update > /dev/null
 
 echo "Installing nodejs and npm"
 apt-get install -y nodejs > /dev/null

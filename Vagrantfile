@@ -25,5 +25,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     :group => "www-data",
     :perms => "775"
 
-  config.vm.provision "shell", path: "setup.sh"
+  config.vm.provision "shell", path: "bootstrap_lamp_for_symfony.sh"
 end

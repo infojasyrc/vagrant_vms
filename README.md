@@ -1,6 +1,7 @@
 # Requirements
 
 - NFS
+- Base Box: ubuntu/trusty64
 
 # VagrantFile
 
@@ -25,3 +26,7 @@ Source: https://github.com/dotless-de/vagrant-vbguest
 - BindFS:
 
 Source: https://github.com/gael-ian/vagrant-bindfs
+
+# Description
+
+This project is for working with Vagrant and LAMP development with Symfony2.
