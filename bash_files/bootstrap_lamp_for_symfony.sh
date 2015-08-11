@@ -24,8 +24,8 @@ apt-get -y update > /dev/null
 echo "Installing bindfs"
 apt-get install -y bindfs > /dev/null
 
-echo "Installing git and vim"
-apt-get install -y git vim > /dev/null
+echo "Installing git, vim and curl"
+apt-get install -y git vim curl > /dev/null
 
 echo "Installing Apache Packages"
 apt-get install -y apache2 libapache2-mod-fastcgi apache2-mpm-worker
@@ -43,8 +43,8 @@ ServerAdmin webmaster@localhost.com
 ServerName localhost
 
 DocumentRoot "/var/www/public"
-ErrorLog "/var/log/apache2/my_project-error_log"
-CustomLog "/var/log/apache2/my_project-access_log" common
+ErrorLog "/var/log/apache2/my_project-error.log"
+CustomLog "/var/log/apache2/my_project-access.log" common
 
 <Directory "/var/www/public">
 Options Indexes FollowSymLinks MultiViews
@@ -66,7 +66,7 @@ service apache2 reload
 # ---------------------------------------
 
 echo "Installing PHP packages"
-apt-get install -y php5 php5-cli php5-fpm curl php5-curl php5-mcrypt php5-xdebug php5-gd php5-apcu php5-json php5-readline > /dev/null
+apt-get install -y php5 php5-cli php5-fpm php5-curl php5-mcrypt php5-xdebug php5-gd php5-apcu php5-json php5-readline > /dev/null
 
 echo "Creating the configurations inside Apache"
 cat > /etc/apache2/conf-available/php5-fpm.conf << EOF

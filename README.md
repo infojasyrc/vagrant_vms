@@ -23,6 +23,11 @@ Source: https://github.com/dotless-de/vagrant-vbguest
 
 Source: https://github.com/gael-ian/vagrant-bindfs
 
+# Install Plugins
+
++ `vagrant plugin install vagrant-bindfs`
++ `vagrant plugin install vagrant-vbguest`
+
 # Description
 
 This project is for a LAMP environment developing a Symfony2 app.
