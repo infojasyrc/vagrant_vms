@@ -1,2 +1,21 @@
+# OS files
+.DS_Store
+
 # Vagrant directory
 .vagrant/
+
+# Symfony files
+/symfony/app/bootstrap.php.cache
+/symfony/app/cache/*
+!/symfony/app/cache/.gitkeep
+/symfony/app/config/parameters.yml
+/symfony/app/logs/*
+!/symfony/app/logs/.gitkeep
+/symfony/app/phpunit.xml
+/symfony/bin/
+/symfony/composer.phar
+/symfony/vendor/
+/symfony/web/bundles/
+
+# IDE
+.idea/

@@ -1,0 +1,10 @@
+configs:
+    use: 'home'
+    home:
+      public_ip: '192.168.0.111'
+      connection: 'en0: Wi-Fi (AirPort)'
+    office:
+      public_ip: '192.168.0.121'
+      connection: 'en4: Thunderbolt Ethernet'
+domain_name: 'app.example.com'
+hostname: 'php-box'
