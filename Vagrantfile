@@ -8,6 +8,7 @@ require 'yaml'
 current_dir = File.dirname(File.expand_path(__FILE__))
 configs     = YAML.load_file("#{current_dir}/config.yaml")
 vConfig     = configs['configs'][configs['configs']['use']]
+ports       = configs['ports']
 
 # require additional plugins
 unless Vagrant.has_plugin?("vagrant-bindfs")
@@ -28,15 +29,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.hostname = "#{configs['hostname']}"
     config.vm.box_check_update = true
 
-    config.vm.network "forwarded_port", guest: 22, host: 50201, auto_correct: true
-    config.vm.network "forwarded_port", guest: 80, host: 50202, auto_correct: true
-    config.vm.network "forwarded_port", guest: 3306, host: 50203, auto_correct: true
-    config.vm.network "forwarded_port", guest: 443, host: 50204, auto_correct: true
+    ports.each do |key, value|
+        config.vm.network "forwarded_port", guest: "#{value['guest']}", host: "#{value['host']}"
+    end
 
     config.vm.network "private_network", type: "dhcp"
     config.vm.network "public_network", bridge: vConfig['connection'], ip: vConfig['public_ip']
 
-    config.ssh.port = 50201
+    config.ssh.port = "#{ports['ssl']['host']}"
 
     config.vm.provider "virtualbox" do |vb|
         vb.name = "#{configs['hostname']}"

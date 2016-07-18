@@ -8,3 +8,16 @@ configs:
       connection: 'en4: Thunderbolt Ethernet'
 domain_name: 'app.example.com'
 hostname: 'php-box'
+ports:
+    ssl:
+      guest: '22'
+      host: '50201'
+    apache:
+      guest: '80'
+      host: '50202'
+    mysql:
+      guest: '3306'
+      host: '50203'
+    apache_ssl:
+      guest: '443'
+      host: '50204'
