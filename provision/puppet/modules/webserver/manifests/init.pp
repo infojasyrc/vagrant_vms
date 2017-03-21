@@ -7,7 +7,7 @@ class webserver::install {
     default_mods        => true,
     default_confd_files => true,
     default_vhost       => true,
-    default_ssl_vhost   => false,
+    default_ssl_vhost   => true,
     mpm_module          => 'prefork'
   }
 

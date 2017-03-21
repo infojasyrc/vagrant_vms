@@ -8,6 +8,9 @@ class frontend::essential {
         nodejs_dev_package_ensure => 'present',
         npm_package_ensure        => 'present',
     }
+    #class { 'nodejs:'
+    #    repo_url_suffix => '4.x',
+    #}
 
     package { 'bower':
         ensure   => 'present',

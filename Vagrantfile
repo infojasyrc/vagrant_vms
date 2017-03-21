@@ -25,60 +25,60 @@ end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-    config.vm.box = "ubuntu/trusty64"
-    config.vm.hostname = "#{configs['hostname']}"
-    config.vm.box_check_update = true
-
-    ports.each do |key, value|
-        config.vm.network "forwarded_port", guest: "#{value['guest']}", host: "#{value['host']}"
-    end
-
-    config.vm.network "private_network", type: "dhcp"
-    config.vm.network "public_network", bridge: vConfig['connection'], ip: vConfig['public_ip']
-
-    config.ssh.port = "#{ports['ssl']['host']}"
-
-    config.vm.provider "virtualbox" do |vb|
-        vb.name = "#{configs['hostname']}"
-        vb.memory = 2048
-    end
-
     if Vagrant.has_plugin?("vagrant-hostmanager")
         config.hostmanager.enabled = true
         config.hostmanager.manage_host = true
         config.hostmanager.manage_guest = true
         config.hostmanager.ignore_private_ip = false
         config.hostmanager.include_offline = true
-        config.hostmanager.aliases = %w(app.example.com)
-
-        config.vm.provision :hostmanager
     end
 
-    if Vagrant.has_plugin?("vagrant-vbguest")
-        config.vbguest.auto_update = false
+    config.vm.define "puppet" do |puppet|
+
+        config.vm.provider "virtualbox" do |vb|
+            vb.name = "#{configs['hostname']}"
+            vb.memory = 2048
+        end
+
+        puppet.vm.box = "ubuntu/trusty64"
+        puppet.vm.hostname = "#{configs['domain_name']}"
+        puppet.vm.box_check_update = false
+
+        ports.each do |key, value|
+            puppet.vm.network "forwarded_port", guest: "#{value['guest']}", host: "#{value['host']}"
+        end
+
+        puppet.vm.network "private_network", ip: "#{configs['private_ip']}"
+        puppet.hostmanager.aliases = %w(puppet)
+
+        puppet.ssh.port = "#{ports['ssl']['host']}"
+
+        if Vagrant.has_plugin?("vagrant-vbguest")
+            puppet.vbguest.auto_update = false
+        end
+
+        puppet.vm.synced_folder ".", "/vagrant", :nfs => true
+
+        if Vagrant.has_plugin?("vagrant-bindfs")
+            puppet.bindfs.bind_folder "/vagrant", "/vagrant",
+                :owner => "vagrant",
+                :group => "www-data",
+                :perms => "775"
+        end
+
+        puppet.vm.provision :puppet do |pu|
+            pu.manifests_path = "provision/puppet/manifests"
+            pu.manifest_file = "default.pp"
+            pu.module_path = ["provision/puppet/modules","~/.puppet/modules"]
+            pu.hiera_config_path = "provision/puppet/hiera.yaml"
+            pu.facter = {
+                "domain_name" => configs["domain_name"]
+            }
+            pu.options = ["--debug --trace --verbose --graph"]
+        end
+
+        # Bash Provision
+        # config.vm.provision "shell", path: "bash_files/bootstrap_lamp_for_symfony.sh"
     end
-
-    config.vm.synced_folder ".", "/vagrant", :nfs => true
-
-    if Vagrant.has_plugin?("vagrant-bindfs")
-        config.bindfs.bind_folder "/vagrant", "/vagrant",
-            :owner => "vagrant",
-            :group => "www-data",
-            :perms => "775"
-    end
-
-    config.vm.provision :puppet do |puppet|
-        puppet.manifests_path = "provision/puppet/manifests"
-        puppet.manifest_file = "default.pp"
-        puppet.module_path = ["provision/puppet/modules","~/.puppet/modules"]
-        puppet.hiera_config_path = "provision/puppet/hiera.yaml"
-        puppet.facter = {
-            "domain_name" => configs["domain_name"]
-        }
-        puppet.options = ["--debug --trace --verbose --graph"]
-    end
-
-	# Bash Provision
-    # config.vm.provision "shell", path: "bash_files/bootstrap_lamp_for_symfony.sh"
 
 end

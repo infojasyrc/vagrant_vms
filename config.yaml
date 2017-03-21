@@ -8,6 +8,7 @@ configs:
       connection: 'en4: Thunderbolt Ethernet'
 domain_name: 'app.example.com'
 hostname: 'phpbase'
+private_ip: '10.0.20.10'
 ports:
     ssl:
       guest: '22'
