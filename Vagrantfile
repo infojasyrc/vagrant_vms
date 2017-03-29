@@ -49,6 +49,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         end
 
         puppet.vm.network "private_network", ip: "#{configs['private_ip']}"
+        #puppet.vm.network "public_network", bridge: vConfig['connection'], ip: vConfig['public_ip']
         puppet.hostmanager.aliases = %w(puppet)
 
         puppet.ssh.port = "#{ports['ssl']['host']}"

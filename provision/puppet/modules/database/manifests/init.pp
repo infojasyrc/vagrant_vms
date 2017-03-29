@@ -2,54 +2,56 @@ include mysql::server
 include mysql::client
 include mysql::bindings
 
+# The `database` class install all packages and configs
+# to handle mysql and databases
 class database {
 
   class { '::mysql::server':
-    override_options        => {
+    override_options => {
       mysqld => { bind-address => '0.0.0.0' }
     },
-    users                   => {
-      'admin@%' => {
-        ensure => 'present',
-        max_connections_per_hour => '0',
-        max_queries_per_hour     => '0',
-        max_updates_per_hour     => '0',
-        max_user_connections     => '0',
+    users            => {
+      'admin@%'         => {
+        ensure                             => 'present',
+        max_connections_per_hour           => '0',
+        max_queries_per_hour               => '0',
+        max_updates_per_hour               => '0',
+        max_user_connections               => '0',
       },
       'admin@localhost' => {
-        ensure => 'present',
-        max_connections_per_hour => '0',
-        max_queries_per_hour     => '0',
-        max_updates_per_hour     => '0',
-        max_user_connections     => '0',
+        ensure                             => 'present',
+        max_connections_per_hour           => '0',
+        max_queries_per_hour               => '0',
+        max_updates_per_hour               => '0',
+        max_user_connections               => '0',
       }
     },
-    databases               => {
+    databases        => {
       'db_main' => {
-        ensure  => present,
-        charset => 'latin1',
-        collate => 'latin1_swedish_ci'
+        ensure            => present,
+        charset           => 'latin1',
+        collate           => 'latin1_swedish_ci'
       },
-      'db_bk' => {
-        ensure  => present,
-        charset => 'latin1',
-        collate => 'latin1_swedish_ci'
+      'db_bk'   => {
+        ensure            => present,
+        charset           => 'latin1',
+        collate           => 'latin1_swedish_ci'
       }
     },
-    grants                  => {
-      'admin@%/db_main.*' => {
-        ensure     => 'present',
-        options    => ['GRANT'],
-        privileges => ['ALL'],
-        table      => 'db_main.*',
-        user       => 'admin@%',
+    grants           => {
+      'admin@%/db_main.*'         => {
+        ensure               => 'present',
+        options              => ['GRANT'],
+        privileges           => ['ALL'],
+        table                => 'db_main.*',
+        user                 => 'admin@%',
       },
       'admin@localhost/db_main.*' => {
-        ensure     => 'present',
-        options    => ['GRANT'],
-        privileges => ['ALL'],
-        table      => 'db_main.*',
-        user       => 'admin@localhost',
+        ensure               => 'present',
+        options              => ['GRANT'],
+        privileges           => ['ALL'],
+        table                => 'db_main.*',
+        user                 => 'admin@localhost',
       }
     }
   }

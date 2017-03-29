@@ -2,6 +2,7 @@ include apt
 
 Exec { path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ] }
 
+# The `system::sources` class install all sources for required sources
 class system::sources {
 
   class { 'apt':
@@ -39,6 +40,7 @@ class system::sources {
 
 }
 
+# The `system::utilities` class install all utilities packages
 class system::utilities {
 
   package { [
@@ -78,6 +80,7 @@ class system::utilities {
 
 }
 
+# The `system` class installs sources and utilities
 class system {
 
   include system::sources

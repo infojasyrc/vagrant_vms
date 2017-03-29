@@ -1,6 +1,7 @@
 include apache
 include apache::mod::ssl
 
+# The `webserver::install` install apache and default config files
 class webserver::install {
 
   class { 'apache':
@@ -23,6 +24,7 @@ class webserver::install {
 
 }
 
+# The `webserver` class run install class
 class webserver {
 
   include webserver::install

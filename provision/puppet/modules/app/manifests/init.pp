@@ -1,5 +1,6 @@
 include apache
 
+# The `app` class configure apache hosts
 class app {
 
     apache::vhost { "${domain_name} non-ssl":

@@ -1,5 +1,6 @@
 include composer
 
+# The `backend::essential` class install all required files for backend
 class backend::essential {
 
   package { [
@@ -7,8 +8,8 @@ class backend::essential {
     'php5-dev',
     'php5-readline'
   ]:
-    ensure  => installed,
-    before  => Package['php-pear', 'php5-intl'],
+    ensure => installed,
+    before => Package['php-pear', 'php5-intl'],
   }
 
   package { [
@@ -21,8 +22,8 @@ class backend::essential {
     'php5-memcache',
     'php5-xdebug'
   ]:
-    ensure  => installed,
-    before  => Package['php-pear'],
+    ensure => installed,
+    before => Package['php-pear'],
   }
 
   package { [
@@ -43,6 +44,8 @@ class backend::essential {
 
 }
 
+# The `backend::packages` class installs composer and
+# set permissions for composer folder
 class backend::packages {
 
   class { 'composer':
@@ -58,6 +61,7 @@ class backend::packages {
 
 }
 
+# The `backend::qa` installs code sniffer and mess detector
 class backend::qa {
 
     exec { 'install php-code-sniffer':
@@ -85,6 +89,8 @@ class backend::qa {
 
 }
 
+
+# The `backend` class run all dependencies
 class backend {
     include backend::essential
     include backend::packages
