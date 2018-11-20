@@ -78,7 +78,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         puppet.options = ["--debug --trace --verbose --graph"]
     end
 
-	# Bash Provision
+    #Bash Provision
     # config.vm.provision "shell", path: "bash_files/bootstrap_lamp_for_symfony.sh"
 
 end

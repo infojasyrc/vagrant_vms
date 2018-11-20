@@ -41,12 +41,14 @@ vagrant plugin install vagrant-hostmanager
 - Installing Puppet modules: apache, mysql, nodejs, reboot and apt
 
 ```
+
 puppet module install puppetlabs-apache
 puppet module install puppetlabs-apt
 puppet module install puppetlabs-mysql
 puppet module install puppetlabs-nodejs
 puppet module install puppetlabs-reboot
 puppet module install willdurand-composer
+
 ```
 
 # Additional information:
@@ -58,3 +60,9 @@ Source: https://github.com/dotless-de/vagrant-vbguest
 - Vagrant plugin for BindFS (Binding file systems):
 
 Source: https://github.com/gael-ian/vagrant-bindfs
+
+# Authors
+- Jose Sal y Rosas
+
+# Collaborator
+- Javier Palomino
