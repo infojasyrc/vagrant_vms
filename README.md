@@ -63,3 +63,6 @@ Source: https://github.com/gael-ian/vagrant-bindfs
 
 # Authors
 - Jose Sal y Rosas
+
+# Collaborator
+- Javier Palomino
